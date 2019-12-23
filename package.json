@@ -1,0 +1,37 @@
+{
+  "name": "x-mens",
+  "version": "1.0.0",
+  "dependencies": {
+    "async": "=0.2.8",
+    "aws-sdk": "2.0.0-rc.14",
+    "bootable": "0.2.x",
+    "bcrypt": "^3.0.2",
+    "bootable-environment": "0.2.x",
+    "connect-flash": "= 0.1.1",
+    "connect-redis": "= 1.4.7",
+    "csv": "=0.3.0",
+    "express": "^3.x",
+    "express-sslify": "^0.1.0",
+    "formidable": "=1.0.14",
+    "i18next": "=19.0.2",
+    "jade": "=0.29.0",
+    "locomotive": "= 0.4.2",
+    "moment": "=2.24.0",
+    "newrelic": "=5.11.0",
+    "passport": "=0.1.17",
+    "password-generator": "= 0.2.1",
+    "pg": "=7.15.1",
+    "sendgrid": "=0.2.7",
+    "throng": "^1.0.0",
+    "uuid": "3.1.0",
+    "uuid-v4": "0.1.0",
+    "validator": "12.1.0",
+    "pg-query-stream": "0.7.0",
+    "JSONStream": "*",
+    "later": "1.1.6"
+  },
+  "engines": {
+    "node": "8.11.4",
+    "npm": "2.15.1"
+  }
+}

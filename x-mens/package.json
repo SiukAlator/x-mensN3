@@ -1,0 +1,15 @@
+{
+  "name": "X-Mens",
+  "version": "0.0.1",
+  "description": "X-Mens utilities",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "keywords": [
+    "X-Mens"
+  ],
+  "author": "César Delgado",
+  "license": "BSD"
+}
