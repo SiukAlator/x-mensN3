@@ -28,7 +28,8 @@
     "validator": "12.1.0",
     "pg-query-stream": "0.7.0",
     "JSONStream": "*",
-    "later": "1.1.6"
+    "later": "1.1.6",
+    "mysql": "2.17.1"
   },
   "engines": {
     "node": "8.11.4",
