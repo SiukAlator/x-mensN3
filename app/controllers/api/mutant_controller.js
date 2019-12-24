@@ -5,6 +5,53 @@ var locomotive = require('locomotive'),
   Controller = locomotive.Controller,
   MutantController = new Controller();
 
+MutantController.index = function () {
+
+  let req = this.req,
+    res = this.res,
+    client = req.client,
+    me = this;
+
+
+  async.waterfall(
+    [
+      function (callback) {
+        return getStats(callback);
+      },
+      function (result, callback) {
+        client.destroy();
+        return res.send(xmens.wrapper(xmens.constants.OK, result));
+      }
+    ],
+    function (err, status) {
+      client.destroy();
+      return res.send(xmens.wrapper(xmens.constants.INTERNAL_ERROR));
+    }
+  );
+
+  function getStats(cb)
+  {
+    let queryStr = xmens.sql.GET_HISTORIC;
+    return client.query(queryStr, [], function (err, result) {
+      if (err) return cb(err, 'GET_HISTORIC')
+      else {
+        let ratio = 0;
+        if ((result[0].is_mutant + result[0].is_human) != 0)
+        {
+          ratio = (result[0].is_mutant/(result[0].is_mutant + result[0].is_human)).toFixed(1);
+        }
+        let resultado = {
+          'count_mutant_dna':result[0].is_mutant, 
+          'count_human_dna':(result[0].is_mutant + result[0].is_human),
+          'ratio':ratio
+        };
+        return cb(null, resultado);
+      };
+
+    });
+  }
+}
+
 MutantController.create = function () {
 
   let req = this.req,
@@ -31,12 +78,14 @@ MutantController.create = function () {
       },
       function (resultado, callback) {
         // done();
+        client.destroy();
         return res.send(resultado);
       }
     ],
     function (err, status) {
       // console.log(err);
       // done();
+      client.destroy();
       return res.send(xmens.wrapper(xmens.constants.INTERNAL_ERROR));
     }
   );
@@ -187,28 +236,28 @@ MutantController.create = function () {
       status = 0;
     else
       return cb(null, resultado);
-    var queryStr = xmens.sql.SET_HISTORIC;
+    let queryStr = xmens.sql.SET_HISTORIC;
     return client.query(queryStr, [dnaString, status], function (err, result) {
-        if (err) return cb(err, 'SET_HISTORIC')
-        else {
-            return cb(null, resultado);
-        };
+      if (err) return cb(err, 'SET_HISTORIC')
+      else {
+        return cb(null, resultado);
+      };
 
     });
-}
+  }
 };
 
 MutantController.before('*', function (next) {
   var req = this.req;
 
   var connection = ms.createConnection({
-    host     : process.env.DB_HOST,
-    user     : process.env.DB_USER,
-    password : process.env.DB_PASS,
-    database : process.env.DB_NAME
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME
   });
-   
-  connection.connect(function(err) {
+
+  connection.connect(function (err) {
     if (err) {
       console.error('error connecting: ' + err.stack);
       return next(err);
@@ -216,19 +265,6 @@ MutantController.before('*', function (next) {
     req.client = connection;
     return next();
   });
-
-  // return pg.connect(process.env.DB_HOST, function (err, client, done) {
-  //   if (err) {
-  //     console.log('err:', err);
-  //     done();
-  //     return next(err);
-  //   }
-  //   req.pg_client = client;
-  //   req.pg_done = done;
-  //   return next();
-  // });
-
-
 });
 
 module.exports = MutantController;
