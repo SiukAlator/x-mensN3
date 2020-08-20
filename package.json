@@ -5,7 +5,7 @@
     "async": "=0.2.8",
     "aws-sdk": "2.0.0-rc.14",
     "bootable": "0.2.x",
-    "bcrypt": "^3.0.2",
+    "bcrypt": "^5.0.0",
     "bootable-environment": "0.2.x",
     "connect-flash": "= 0.1.1",
     "connect-redis": "= 1.4.7",
